@@ -11,10 +11,6 @@ def bootstrap_paths(ret: np.ndarray, H: int, N: int, rng: np.random.Generator) -
 
 
 def alpha_from_hf_paths(hf_paths: np.ndarray, alpha_stat: str) -> float:
-    """
-    Compute pathwise alpha = max_t max(0, 1/HF_t - 1),
-    then summarize across paths by mean / q95 / q99.
-    """
     hf_safe = np.where(hf_paths <= 0, 1e-12, hf_paths)
     alpha_t = np.maximum(0.0, 1.0 / hf_safe - 1.0)
     alpha_path = alpha_t.max(axis=1)
